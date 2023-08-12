@@ -41,3 +41,164 @@ type(uber_15["Pickup_date"][0])
 uber_15["Pickup_date"] = pd.to_datetime(uber_15["Pickup_date"])
 
 type(uber_15["Pickup_date"][0])
+
+"""#Which Month have Max Uber pickup in Newyork city ?
+
+dt is shorform of datetime
+"""
+
+uber_15["Pickup_date"].dt.month
+
+uber_15["Pickup_date"].dt.month_name()
+
+"""#calculating the number of pickup monthwise"""
+
+uber_15["month"] = uber_15["Pickup_date"].dt.month_name()
+
+uber_15["month"].value_counts()
+
+uber_15["month"].value_counts().plot()
+
+uber_15["month"].value_counts().plot(kind='bar')
+
+uber_15["weekday"] =uber_15["Pickup_date"].dt.day_name()
+
+uber_15["day"] =uber_15["Pickup_date"].dt.day
+
+uber_15["hour"] =uber_15["Pickup_date"].dt.hour
+uber_15["minute"] =uber_15["Pickup_date"].dt.minute
+
+uber_15.head()
+
+"""#PIVOT"""
+
+pivot =pd.crosstab(index=uber_15["month"],columns=uber_15["weekday"])
+pivot
+
+"""#Grouped bar chart"""
+
+pivot.plot(kind="bar",figsize = (8,6))
+
+"""#Find out Hourly Rush in New york city on all days"""
+
+summary = uber_15.groupby(["weekday","hour"],as_index=False).size()
+
+summary
+
+uber_15[["weekday","hour"]].value_counts()
+
+plt.figure(figsize=(8,6))
+sns.pointplot(x="hour",y="size",hue="weekday",data =summary)
+
+"""#Which Base number has most number of Active Vehicles ?"""
+
+uber_15.columns
+
+uber_foil = pd.read_csv("/content/Uber-Jan-Feb-FOIL.csv")
+
+uber_foil.shape
+
+uber_foil.head(3)
+
+"""#Box Plot"""
+
+!pip install chart_studio
+!pip install plotly
+
+import chart_studio.plotly as py
+import plotly.graph_objs as go
+import plotly.express as px
+
+from plotly.offline import download_plotlyjs, init_notebook_mode ,plot ,iplot
+
+init_notebook_mode(connected=True)
+
+uber_foil.columns
+
+px.box(x='dispatching_base_number',y='active_vehicles',data_frame = uber_foil)
+
+files = os.listdir()[1:9]
+files
+
+files.remove("uber-raw-data-janjune-15_sample.csv")
+
+files.remove("Uber-Jan-Feb-FOIL.csv")
+
+files
+
+"""#Merging multiple csv files into one"""
+
+final = pd.DataFrame()
+path = r"/content"
+for file in files:
+  current_df = pd.read_csv(path+'/'+file)
+  final = pd.concat([current_df,final])
+
+final.shape
+
+final.duplicated().sum()
+
+final.drop_duplicates(inplace=True)
+
+final.shape
+
+final.head()
+
+"""#Performing Spatial Analysis to Find Rush of Uber Pickups
+
+At what location of New York City we are getting Rush ??
+"""
+
+rush_uber = final.groupby(["Lat","Lon"],as_index=False).size()
+rush_uber
+
+rush_uber.head(6)
+
+!pip install folium
+
+import folium
+
+basemap = folium.Map()
+
+basemap
+
+from folium.plugins import HeatMap
+
+HeatMap(rush_uber).add_to(basemap)
+
+basemap
+
+"""#Examine rush on Hour and Weekday (Peforming Pair wise Analysis)"""
+
+final.columns
+
+final.head(3)
+
+final.dtypes
+
+final["Date/Time"][0]
+
+final["Date/Time"] = pd.to_datetime(final["Date/Time"],format="%m/%d/%Y %H:%M:%S")
+
+final["Date/Time"].dtype
+
+final['day'] = final["Date/Time"].dt.day
+final['hour'] =final["Date/Time"].dt.hour
+
+final.groupby(['day','hour']).size()
+
+"""#Pivot table without crosstab concept"""
+
+pivot = final.groupby(['day','hour']).size().unstack()
+
+"""Darker the colour the more rush it means"""
+
+pivot.style.background_gradient()
+
+"""#Automate our Analysis"""
+
+def gen_pivot_table(df,col1,col2):
+  pivot = final.groupby([col1,col2]).size().unstack()
+  return pivot.style.background_gradient()
+
+gen_pivot_table(final,"day","hour")
