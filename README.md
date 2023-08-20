@@ -31,13 +31,7 @@ And that's the gist of it! This notebook is like a treasure trove of insights ab
 
 
 
-# Calculating the number of pickup monthwise
 
-![App Screenshot](https://ibb.co/nRSnqf0)
-![App Screenshot](https://ibb.co/jMsBcNQ)
-
-#Find out Hourly Rush in New york city on all days
-![App Screenshot](https://ibb.co/XJnptwk)
 
 
 
