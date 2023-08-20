@@ -30,6 +30,11 @@ Automation: Don't want to repeat steps all the time, right? So, I crafted a func
 And that's the gist of it! This notebook is like a treasure trove of insights about Uber pickups in NYC. So, if you're into data analysis and curious about urban transportation trends, give it a look!
 
 
+# Calculating the number of pickup monthwise
+[
+![Screenshot 2023-08-12 at 4 46 52 PM](https://github.com/UditTiwari/Uber-NewYork-Data-Analysis/assets/48078954/e2055def-f98e-4db1-8f43-7adc93a831b0)
+](url)
+
 
 
 
