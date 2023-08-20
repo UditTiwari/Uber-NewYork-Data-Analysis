@@ -37,6 +37,7 @@ And that's the gist of it! This notebook is like a treasure trove of insights ab
 
 ![Screenshot 2023-08-12 at 4 46 44 PM](https://github.com/UditTiwari/Uber-NewYork-Data-Analysis/assets/48078954/bd4b305a-9570-4c33-9229-ff1b45635bbf)
 
+![Screenshot 2023-08-12 at 4 47 14 PM](https://github.com/UditTiwari/Uber-NewYork-Data-Analysis/assets/48078954/a89f9471-1bbe-4710-a67e-ddd9f768f22f)
 
 
 #Find out Hourly Rush in New york city on all days
